@@ -1,0 +1,45 @@
+{
+  "metadata": {
+    "kernelspec": {
+      "name": "xpython",
+      "display_name": "Python 3.13 (XPython)",
+      "language": "python"
+    },
+    "language_info": {
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "version": "3.13.1"
+    }
+  },
+  "nbformat_minor": 5,
+  "nbformat": 4,
+  "cells": [
+    {
+      "id": "41bcc7ec-22cf-471e-bd9d-fb693f7f1445",
+      "cell_type": "code",
+      "source": "# Product class\nclass Product:\n    def __init__(self, product_id, name, price):\n        self.product_id = product_id\n        self.name = name\n        self.price = price\n\n    def __str__(self):\n        return f\"{self.name} - ₹{self.price}\"\n\n\n# Cart class\nclass Cart:\n    def __init__(self):\n        self.items = {}\n\n    def add_item(self, product, quantity=1):\n        if product.product_id in self.items:\n            self.items[product.product_id]['quantity'] += quantity\n        else:\n            self.items[product.product_id] = {'product': product, 'quantity': quantity}\n        print(f\"Added {quantity} x {product.name} to cart.\")\n\n    def remove_item(self, product_id, quantity=1):\n        if product_id in self.items:\n            if self.items[product_id]['quantity'] > quantity:\n                self.items[product_id]['quantity'] -= quantity\n                print(f\"Removed {quantity} from {self.items[product_id]['product'].name}.\")\n            else:\n                removed_product = self.items.pop(product_id)\n                print(f\"Removed {removed_product['product'].name} completely from cart.\")\n        else:\n            print(\"Product not found in cart.\")\n\n    def view_cart(self):\n        if not self.items:\n            print(\"Cart is empty.\")\n        else:\n            print(\"\\n--- Cart Contents ---\")\n            for item in self.items.values():\n                product = item['product']\n                quantity = item['quantity']\n                print(f\"{product.name} (x{quantity}) - ₹{product.price * quantity}\")\n            print(\"---------------------\")\n\n    def calculate_total(self):\n        total = sum(item['product'].price * item['quantity'] for item in self.items.values())\n        print(f\"Total Amount: ₹{total}\")\n        return total\n\n\n# Example usage\nif __name__ == \"__main__\":\n    # Create some products\n    p1 = Product(1, \"Laptop\", 50000)\n    p2 = Product(2, \"Smartphone\", 20000)\n    p3 = Product(3, \"Headphones\", 2000)\n\n    # Create a cart\n    cart = Cart()\n\n    # Add items\n    cart.add_item(p1, 1)\n    cart.add_item(p2, 2)\n    cart.add_item(p3, 3)\n\n    # View cart\n    cart.view_cart()\n\n    # Remove an item\n    cart.remove_item(2, 1)\n\n    # View cart again\n    cart.view_cart()\n\n    # Calculate total\n    cart.calculate_total()\n",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [
+        {
+          "name": "stdout",
+          "output_type": "stream",
+          "text": "Added 1 x Laptop to cart.\nAdded 2 x Smartphone to cart.\nAdded 3 x Headphones to cart.\n\n--- Cart Contents ---\nLaptop (x1) - ₹50000\nSmartphone (x2) - ₹40000\nHeadphones (x3) - ₹6000\n---------------------\nRemoved 1 from Smartphone.\n\n--- Cart Contents ---\nLaptop (x1) - ₹50000\nSmartphone (x1) - ₹20000\nHeadphones (x3) - ₹6000\n---------------------\nTotal Amount: ₹76000\n"
+        }
+      ],
+      "execution_count": 1
+    },
+    {
+      "id": "6f228c54-8dd3-4a7f-ab20-254484dca93c",
+      "cell_type": "code",
+      "source": "",
+      "metadata": {
+        "trusted": true
+      },
+      "outputs": [],
+      "execution_count": null
+    }
+  ]
+}
